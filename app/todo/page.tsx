@@ -1,4 +1,7 @@
 'use client';
+import { UserProfile, withPageAuthRequired } from '@auth0/nextjs-auth0/client';
+import Link from 'next/link';
+import { FC } from 'react';
 import useSWR, { useSWRConfig } from 'swr';
 import styles from '../../styles/Home.module.css';
 
@@ -20,9 +23,7 @@ const useTodo = () => {
         (
           await fetch('/api/todo/update', {
             method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(newTodo),
           })
         ).json(),
@@ -42,7 +43,6 @@ const useTodo = () => {
     mutate(
       '/api/todo/read',
       (async () => [(await fetch('/api/todo/create')).json(), ...todos])(),
-
       {
         optimisticData: [{ id: 'temp', title: '', done: false }, ...todos],
         rollbackOnError: true,
@@ -52,10 +52,11 @@ const useTodo = () => {
   return { todos, error, update, createNewTodo } as const;
 };
 
-export default function Todo() {
+const TodoPage: FC<{ user: UserProfile }> = () => {
   const { todos, update, createNewTodo } = useTodo();
   return (
     <div className={styles.container}>
+      <Link href="/api/auth/logout">Logout</Link>
       <main className={styles.main}>
         <h1 className={styles.title}>Todo sample</h1>
 
@@ -85,4 +86,5 @@ export default function Todo() {
       </main>
     </div>
   );
-}
+};
+export default withPageAuthRequired(TodoPage);
