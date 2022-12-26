@@ -20,13 +20,11 @@ const useTodo = () => {
       '/api/todo/read',
       (async () => [
         ...todos.slice(0, index),
-        await (
-          await fetch('/api/todo/update', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(newTodo),
-          })
-        ).json(),
+        await fetch('/api/todo/update', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(newTodo),
+        }).then((res) => res.json()),
         ...todos.slice(index + 1),
       ])(),
       {
@@ -42,7 +40,10 @@ const useTodo = () => {
   const createNewTodo = () => {
     mutate(
       '/api/todo/read',
-      (async () => [(await fetch('/api/todo/create')).json(), ...todos])(),
+      (async () => [
+        await fetch('/api/todo/create').then((res) => res.json()),
+        ...todos,
+      ])(),
       {
         optimisticData: [{ id: 'temp', title: '', done: false }, ...todos],
         rollbackOnError: true,
