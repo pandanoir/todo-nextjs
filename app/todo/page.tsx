@@ -55,9 +55,11 @@ const useTodo = () => {
 
 const TodoPage: FC<{ user: UserProfile }> = () => {
   const { todos, update, createNewTodo } = useTodo();
+  console.log(todos, styles);
   return (
     <div className={styles.container}>
-      <Link href="/api/auth/logout">Logout</Link>
+      {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
+      <a href="/api/auth/logout">Logout</a>
       <main className={styles.main}>
         <h1 className={styles.title}>Todo sample</h1>
 

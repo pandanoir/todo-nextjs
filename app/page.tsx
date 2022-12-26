@@ -7,6 +7,8 @@ export default function Home() {
       <main className={styles.main}>
         <h1 className={styles.title}>Top page</h1>
         <Link href="/todo">app page</Link>
+        {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
+        <a href="/api/auth/login">login</a>
       </main>
     </div>
   );
