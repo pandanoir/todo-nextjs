@@ -20,7 +20,7 @@ const useTodo = () => {
       '/api/todo/read',
       (async () => [
         ...todos.slice(0, index),
-        (
+        await (
           await fetch('/api/todo/update', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
