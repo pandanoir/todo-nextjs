@@ -2,6 +2,10 @@ https://auth0.com/docs/quickstart/webapp/nextjs#install-the-auth0-next-js-sdk �
 
 ## Set up
 
+```
+$ npx create-next-app https://github.com/pandanoir/todo-nextjs project_name
+```
+
 ### vercel のセットアップ
 
 環境変数をセットする。
